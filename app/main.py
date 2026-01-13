@@ -1,10 +1,11 @@
 from fastapi import FastAPI
-from app.api.routes import users
+from app.api.routes import users, posts
 
 app = FastAPI(title="My FastAPI app")
 
 # include routers
 app.include_router(users.router)
+app.include_router(posts.router)
 
 
 @app.get("/")

@@ -39,10 +39,10 @@ class PostRepository(BaseRepository[Post, PostCreate, PostUpdate]):
         )
         return result.scalar_one_or_none()
 
-    async def published_post(self, post_id: int) -> Optional[Post]:
+    async def publish_post(self, post_id: int) -> Optional[Post]:
         """Publish a post"""
         return await self.update_record(post_id, {"published": True})
 
-    async def unpublished_post(self, post_id: int) -> Optional[Post]:
+    async def unpublish_post(self, post_id: int) -> Optional[Post]:
         """Publish a post"""
         return await self.update_record(post_id, {"published": False})

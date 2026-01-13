@@ -17,7 +17,16 @@ class UserRepository(SoftDeleteRepository[User, UserCreate, UserUpdate]):
         )
         return result.scalar_one_or_none()
 
-    async def get_by_username(self, user_id: int) -> Optional[User]:
+    async def get_by_username(self, username: str) -> Optional[User]:
+        """Get user with all their posts (eager loading)"""
+        result = await self.db.execute(
+            select(User)
+            .where(User.username == username)
+            .where(User.deleted_at.is_(None))
+        )
+        return result.scalar_one_or_none()
+
+    async def get_with_posts(self, user_id: int) -> Optional[User]:
         """Get user with all their posts (eager loading)"""
         result = await self.db.execute(
             select(User)
